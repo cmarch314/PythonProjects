@@ -1,0 +1,175 @@
+# Setup
+c-->from imp import reload
+c-->import interval
+c-->reload(interval)
+c-->from interval import Interval as I
+# Test min_max, mid_err, repr, and str
+e-->repr(I.min_max(2.0,3.0))-->Interval(2.0,3.0)
+e-->str (I.min_max(2.0,3.0))-->2.5(+/-0.5)
+e-->repr(I.min_max(2.5))-->Interval(2.5,2.5)
+e-->repr(I.mid_err(2.5,0.5))-->Interval(2.0,3.0)
+e-->str (I.mid_err(2.5,0.5))-->2.5(+/-0.5)
+e-->repr(I.mid_err(2.5))-->Interval(2.5,2.5)
+^-->I.min_max(2.0,'x')-->AssertionError
+^-->I.min_max('x',3.0)-->AssertionError
+^-->I.min_max(3.0,2.0)-->AssertionError
+^-->I.mid_err(2.5,'x')-->AssertionError
+^-->I.mid_err('x',2.5)-->AssertionError
+^-->I.mid_err(2.5,-.5)-->AssertionError
+# Test best, error, relative_error
+c-->x = I.mid_err(2.5,0.5)
+e-->x.best()-->2.5
+e-->x.error()-->0.5
+e-->x.relative_error()-->20.0
+# Test bool
+e-->bool(I.mid_err(2.5,0.5))-->True
+e-->bool(I.mid_err(2.5,0.0))-->False
+# Prefix +/-
+c-->x = I.mid_err(2.5,0.5)
+e-->+x-->2.5(+/-0.5)
+e-->-x-->-2.5(+/-0.5)
+# Test +
+c-->n = I.min_max(-3.0,-2.0)
+c-->i = I.min_max(-1.0,+2.0)
+c-->p = I.min_max(2.0,3.0)
+e-->repr(n+n)-->Interval(-6.0,-4.0)
+e-->repr(n+i)-->Interval(-4.0,0.0)
+e-->repr(n+p)-->Interval(-1.0,1.0)
+e-->repr(i+n)-->Interval(-4.0,0.0)
+e-->repr(n+i)-->Interval(-4.0,0.0)
+e-->repr(i+p)-->Interval(1.0,5.0)
+e-->repr(p+n)-->Interval(-1.0,1.0)
+e-->repr(p+i)-->Interval(1.0,5.0)
+e-->repr(p+p)-->Interval(4.0,6.0)
+e-->repr(i+2)-->Interval(1.0,4.0)
+e-->repr(i+2.0)-->Interval(1.0,4.0)
+e-->repr(2+i)-->Interval(1.0,4.0)
+e-->repr(2.0+i)-->Interval(1.0,4.0)
+^-->i+'2'-->TypeError
+^-->'2'+i-->TypeError
+# Test -
+c-->n = I.min_max(-3.0,-2.0)
+c-->i = I.min_max(-1.0,+2.0)
+c-->p = I.min_max(2.0,3.0)
+e-->repr(n-n)-->Interval(-1.0,1.0)
+e-->repr(n-i)-->Interval(-5.0,-1.0)
+e-->repr(n-p)-->Interval(-6.0,-4.0)
+e-->repr(i-n)-->Interval(1.0,5.0)
+e-->repr(n-i)-->Interval(-5.0,-1.0)
+e-->repr(i-p)-->Interval(-4.0,0.0)
+e-->repr(p-n)-->Interval(4.0,6.0)
+e-->repr(p-i)-->Interval(0.0,4.0)
+e-->repr(p-p)-->Interval(-1.0,1.0)
+e-->repr(i-2)-->Interval(-3.0,0.0)
+e-->repr(i-2.0)-->Interval(-3.0,0.0)
+e-->repr(2-i)-->Interval(0.0,3.0)
+e-->repr(2.0-i)-->Interval(0.0,3.0)
+^-->i-'2'-->TypeError
+^-->'2'-i-->TypeError
+# Test *
+c-->n = I.min_max(-3.0,-2.0)
+c-->i = I.min_max(-1.0,+2.0)
+c-->p = I.min_max(2.0,3.0)
+e-->repr(n*n)-->Interval(4.0,9.0)
+e-->repr(n*i)-->Interval(-6.0,3.0)
+e-->repr(n*p)-->Interval(-9.0,-4.0)
+e-->repr(i*n)-->Interval(-6.0,3.0)
+e-->repr(n*i)-->Interval(-6.0,3.0)
+e-->repr(i*p)-->Interval(-3.0,6.0)
+e-->repr(p*n)-->Interval(-9.0,-4.0)
+e-->repr(p*i)-->Interval(-3.0,6.0)
+e-->repr(p*p)-->Interval(4.0,9.0)
+e-->repr(i*2)-->Interval(-2.0,4.0)
+e-->repr(i*2.0)-->Interval(-2.0,4.0)
+e-->repr(2*i)-->Interval(-2.0,4.0)
+e-->repr(2.0*i)-->Interval(-2.0,4.0)
+^-->i*'2'-->TypeError
+^-->'2'*i-->TypeError
+# Test /
+c-->n = I.min_max(-3.0,-2.0)
+c-->i = I.min_max(-1.0,+2.0)
+c-->p = I.min_max(2.0,3.0)
+e-->repr(n/n)-->Interval(0.6666666666666666,1.5)
+^-->repr(n/i)-->ZeroDivisionError
+e-->repr(n/p)-->Interval(-1.5,-0.6666666666666666)
+e-->repr(i/n)-->Interval(-1.0,0.5)
+^-->repr(n/i)-->ZeroDivisionError
+e-->repr(i/p)-->Interval(-0.5,1.0)
+e-->repr(p/n)-->Interval(-1.5,-0.6666666666666666)
+^-->repr(p/i)-->ZeroDivisionError
+e-->repr(p/p)-->Interval(0.6666666666666666,1.5)
+e-->repr(i/2)-->Interval(-0.5,1.0)
+e-->repr(i/2.0)-->Interval(-0.5,1.0)
+e-->repr(n/2)-->Interval(-1.5,-1.0)
+e-->repr(p/2)-->Interval(1.0,1.5)
+^-->repr(2/i)-->ZeroDivisionError
+^-->repr(2.0/i)-->ZeroDivisionError
+e-->repr(2/n)-->Interval(-1.0,-0.6666666666666666)
+e-->repr(2/p)-->Interval(0.6666666666666666,1.0)
+^-->i/'2'-->TypeError
+^-->'2'/i-->TypeError
+# Test **
+c-->p = I.min_max(2.0,4.0)
+e-->repr(p**0)-->Interval(1.0,1.0)
+e-->repr(p**3)-->Interval(8.0,64.0)
+e-->repr(p**-3)-->Interval(0.015625,0.125)
+^-->p**3.0-->TypeError
+^-->p**p-->TypeError
+# Test relational operators
+c-->l = I.min_max(1.0,5.0)
+c-->r = I.min_max(4.0,6.0)
+e-->l == l-->True
+e-->l != l-->False
+^-->l < l-->AssertionError
+^-->l <= l-->AssertionError
+^-->l >= l-->AssertionError
+^-->l > l-->AssertionError
+c-->I.compare_mode = 'x'
+^-->l < l-->AssertionError
+^-->l <= l-->AssertionError
+^-->l >= l-->AssertionError
+^-->l > l-->AssertionError
+c-->I.compare_mode = 'liberal'
+e-->l < r-->True
+e-->l <= r-->True
+e-->r >= l-->True
+e-->r > l-->True
+e-->l < 4-->True
+e-->l <= 4-->True
+e-->4 >= l-->True
+e-->4 > l-->True
+c-->I.compare_mode = 'conservative'
+e-->l < r-->False
+e-->l <= r-->False
+e-->r >= l-->False
+e-->r > l-->False
+e-->l < 4-->False
+e-->l <= 4-->False
+e-->4 >= l-->False
+e-->4 > l-->False
+c-->r = I.min_max(6.0,7.0)
+e-->l < r-->True
+e-->l <= r-->True
+e-->r >= l-->True
+e-->r > l-->True
+e-->l < 6-->True
+e-->l <= 6-->True
+e-->6 >= l-->True
+e-->6 > l-->True
+# Test abs, sqrt
+c-->n = I.min_max(-3.0,-2.0)
+c-->i = I.min_max(-1.0,+2.0)
+c-->p = I.min_max(2.0,3.0)
+e-->repr(abs(n))-->Interval(2.0,3.0)
+e-->repr(abs(i))-->Interval(0.0,2.0)
+e-->repr(abs(p))-->Interval(2.0,3.0) 
+e-->repr(p.sqrt())-->Interval(1.4142135623730951,1.7320508075688772)
+^-->repr(i.sqrt())-->ValueError
+# Test settattr
+c-->p = I.min_max(2.0,3.0)
+^-->p.min = 0.-->AssertionError
+^-->p.max = 0.-->AssertionError
+^-->p.anything = 0.-->AssertionError
+
+
+

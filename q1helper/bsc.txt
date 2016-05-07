@@ -1,0 +1,43 @@
+c-->from q1solution import one_of,opposite_of,sort_names,sort_ages,big_family,only_child,follows1,follows2,reverse
+c-->from predicate import is_prime
+c-->from goody import irange
+# Test one_of/opposite_of
+c-->is_vowel = one_of(['a','e','i','o','u'])
+e-->is_vowel('a')-->True
+e-->is_vowel('e')-->True
+e-->is_vowel('i')-->True
+e-->is_vowel('o')-->True
+e-->is_vowel('u')-->True
+e-->is_vowel('b')-->False
+e-->is_vowel('c')-->False
+e-->is_vowel('l')-->False
+e-->is_vowel('m')-->False
+e-->is_vowel('y')-->False
+e-->is_vowel('z')-->False
+c-->is_composite = opposite_of(is_prime)
+e-->is_composite(2)-->False
+e-->is_composite(3)-->False
+e-->is_composite(4)-->True
+e-->is_composite(5)-->False
+e-->is_composite(6)-->True
+e-->is_composite(7)-->False
+e-->is_composite(8)-->True
+e-->is_composite(9)-->True
+c-->is_consonant = opposite_of(is_vowel)
+e-->is_consonant('a')-->False
+e-->is_consonant('b')-->True
+e-->is_consonant('e')-->False
+e-->is_consonant('f')-->True
+# Test sort_names/sort_ages
+e-->sort_names([('John','Smith'),('Mary','Smith'),('Fred','Jones'),('Frieda','Jones'),('Timothy','Jones')])-->[('Fred', 'Jones'), ('Frieda', 'Jones'), ('Timothy', 'Jones'), ('John', 'Smith'), ('Mary', 'Smith')]
+e-->sort_ages([('Angie',(2,10,1954)),('Bob',(12,16,1949)),('Charlie',(9,4,1988)),('Denise',(11,29,1990)),('Egon',(11, 22, 1924)),('Frances',(2,10,1954)),('Gerald',(2,21,1920)),('Helen',(8,15,1924)),('Izzy',(12, 29, 1924)),('Joyce',(2,21,1920))])-->[('Denise', (11, 29, 1990)), ('Charlie', (9, 4, 1988)), ('Frances', (2, 10, 1954)), ('Angie', (2, 10, 1954)), ('Bob', (12, 16, 1949)), ('Izzy', (12, 29, 1924)), ('Egon', (11, 22, 1924)), ('Helen', (8, 15, 1924)), ('Joyce', (2, 21, 1920)), ('Gerald', (2, 21, 1920))]
+# Test big_family/only_child
+e-->sorted(big_family(dict(Angie=2,Bob=5,Charlie=0,Denise=1,Egon=3,Frances=0, Gerald=2)))-->['Bob', 'Egon']
+==-->only_child(dict(Angie=2,Bob=5,Charlie=0,Denise=1,Egon=3,Frances=0, Gerald=2))-->{'Egon': False, 'Denise': False, 'Charlie': True, 'Frances': True, 'Gerald': False, 'Bob': False, 'Angie': False}
+# Test follows
+==-->follows1('bookeeper')-->{'e':{'e','p','r'}, 'o':{'o','k'}, 'p':{'e'}, 'k': {'e'}, 'b':{'o'}}
+==-->follows2('bookeeper')-->{'e':{'e','p','r'}, 'o':{'o','k'}, 'p':{'e'}, 'k': {'e'}, 'b':{'o'}}
+==-->follows1('attempt')-->{'a':{'t'}, 'm':{'p'}, 'e':{'m'}, 't':{'t','e'}, 'p':{'t'}}
+==-->follows2('attempt')-->{'a':{'t'}, 'm':{'p'}, 'e':{'m'}, 't':{'t','e'}, 'p':{'t'}}
+# Test reverse
+==-->reverse({'Angie':{'plumbing', 'yardwork'},'Bob': {'computers','carpentry'},'Charlie': {'yardwork','carpentry','roofing'},'Denise': {'computers','yardwork','roofing'},'Egon': {'computers'},'Frances': {'plumbing','carpentry', 'roofing'}})-->{'carpentry': {'Frances', 'Bob', 'Charlie'}, 'computers': {'Egon', 'Bob', 'Denise'}, 'plumbing': {'Angie', 'Frances'}, 'roofing': {'Frances', 'Denise', 'Charlie'}, 'yardwork': {'Angie', 'Denise', 'Charlie'}}

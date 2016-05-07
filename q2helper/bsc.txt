@@ -1,0 +1,22 @@
+# import
+c-->from q2solution import tomorrow
+# computations
+e-->tomorrow('9/4/1998')-->9/5/1998
+e-->tomorrow('1/1/13')-->1/2/2013
+e-->tomorrow('9/30/1998')-->10/1/1998
+e-->tomorrow('5/31/1998')-->6/1/1998
+e-->tomorrow('12/31/1998')-->1/1/1999
+e-->tomorrow('12/31/2013')-->1/1/2014
+e-->tomorrow('2/28/2000')-->2/29/2000
+e-->tomorrow('2/28/00')-->2/29/2000
+e-->tomorrow('2/29/00')-->3/1/2000
+# exceptions
+^-->tomorrow('05/1/2000')-->AssertionError
+^-->tomorrow('13/1/00')-->AssertionError
+^-->tomorrow('2/0/00')-->AssertionError
+^-->tomorrow('2/00/00')-->AssertionError
+^-->tomorrow('2/005/00')-->AssertionError
+^-->tomorrow('9/31/2013')-->AssertionError
+^-->tomorrow('2/29/2001')-->AssertionError
+^-->tomorrow('9/31/2013')-->AssertionError
+^-->tomorrow('9X31X2013')-->AssertionError

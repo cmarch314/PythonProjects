@@ -1,0 +1,30 @@
+# Setup
+c-->from imp import reload
+c-->import q4solution
+c-->reload(q4solution)
+c-->from goody import irange
+c-->from q4solution import is_prime, primes, lets, in_a_row, Permutation, Permutation2, differences, skipper
+# Test in_a_row
+==-->in_a_row(2,[4,4,2,6,6,9,6,7,7,3,2,2])-->{4,6,7,2}
+==-->in_a_row(3,[5,3,7,7,7,2,3,8,5,4,4,4,6])-->{7,4}
+==-->in_a_row(4,[5,5,5])-->set()
+==-->in_a_row(5,map(lambda x : x.rstrip(),open('in_a_row.txt')))-->set()
+==-->in_a_row(4,map(lambda x : x.rstrip(),open('in_a_row.txt')))-->{'l', 'i'}
+==-->in_a_row(3,map(lambda x : x.rstrip(),open('in_a_row.txt')))-->{'l', 'i', 'c'}
+==-->in_a_row(2,map(lambda x : x.rstrip(),open('in_a_row.txt')))-->{'l', 'm', 'i', 'f', 'c', 'x', 'z'}
+# Test Permutation
+e-->[k for k in  Permutation([4,0,3,1,2],0)]-->[0, 4, 2, 3, 1]
+e-->[k for k in  Permutation([4,0,3,1,2],3)]-->[3, 1, 0, 4, 2]
+e-->[k for k in  Permutation([0],0)]-->[0]
+# Test Permutation2
+e-->[k for k in  Permutation2([4,0,3,1,2],0)]-->[0, 4, 2, 3, 1]
+e-->[k for k in  Permutation2([4,0,3,1,2],3)]-->[3, 1, 0, 4, 2]
+e-->[k for k in  Permutation2([0],0)]-->[0]
+# Test differences
+e-->list( differences('abcdefghijklmnopqrstuvwxyz','abc#efghij;lmnopq;stuvwxyz/') )-->[(3, 'd', '#'), (10, 'k', ';'), (17, 'r', ';')]
+e-->list( differences(lets('abcdefghijklmnopqrstuvwxyz///'), lets('abc1ef2hijk3mnopqr4tuvwxyz')) )-->[(3, 'd', '1'), (6, 'g', '2'), (11, 'l', '3'), (18, 's', '4')]
+# Test skipper
+e-->''.join([str(v) for v in skipper('abcdefghijklmnopqrstuvwxyz')])-->abcdefghijklmnopqrstuvwxyz
+e-->''.join([str(v) for v in skipper('abcdefghijklmnopqrstuvwxyz',1)])-->acegikmoqsuwy
+e-->''.join([str(v) for v in skipper('abcdefghijklmnopqrstuvwxyz',2)])-->adgjmpsvy
+e-->' '.join([str(v) for v in skipper(primes(50),2)])-->2 7 17 29 41

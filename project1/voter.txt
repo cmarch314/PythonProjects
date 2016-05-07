@@ -1,0 +1,7 @@
+A;x;y;z;w
+B;y;x;z;w
+C;z;w;x;y
+D;x;y;z;w
+E;y;x;z;w
+F;z;y;z;x
+G;w;x;z;x

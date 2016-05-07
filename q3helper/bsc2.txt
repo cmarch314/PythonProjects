@@ -1,0 +1,63 @@
+# Setup
+c-->from imp import reload
+c-->import q3solution
+c-->reload(q3solution)
+c-->from q3solution import Point
+# Test init
+^-->Point(1.0, 2)-->AssertionError
+^-->Point(1, 2.0)-->AssertionError
+^-->Point('x', 'y')-->AssertionError
+c-->x = Point(1,2)
+c-->y = Point(5,5)
+# Test repr/str
+e-->repr(x)-->Point(1,2)
+e-->repr(y)-->Point(5,5)
+e-->str(x)-->(x=1,y=2)
+e-->str(y)-->(x=5,y=5)
+# Test bool
+e-->bool(x)-->True
+e-->bool(y)-->True
+e-->bool(Point(0,0))-->False
+# Test +
+e-->x+x-->(x=2,y=4)
+e-->y+y-->(x=10,y=10)
+e-->x+y-->(x=6,y=7)
+e-->y+x-->(x=6,y=7)
+^-->x+1-->TypeError
+# Test *
+e-->2*x-->(x=2,y=4)
+e-->x*2-->(x=2,y=4)
+e-->2*y-->(x=10,y=10)
+e-->y*2-->(x=10,y=10)
+^-->2.*x-->TypeError
+^-->x*2.-->TypeError
+^-->x*y-->TypeError
+# Test <
+e-->x < x-->False
+e-->x < y-->True
+e-->x < Point(1,1)-->False
+e-->x < 1-->False
+e-->y < 7.08-->True
+^-->x < 'abc'-->TypeError
+^-->7.08 < y-->TypeError
+# Test getitem
+e-->x[0]-->1
+e-->x[1]-->2
+e-->y[0]-->5
+e-->y[1]-->5
+^-->x[1.]-->IndexError
+^-->y[-1]-->IndexError
+^-->y[2]-->IndexError
+e-->x['x']-->1
+e-->x['y']-->2
+e-->y['x']-->5
+e-->y['x']-->5
+^-->y['z']-->IndexError
+# Test __call__
+c-->x(2,1)
+e-->x-->(x=2,y=1)
+c-->y(0,0)
+e-->y-->(x=0,y=0)
+^-->x(1.0, 2)-->AssertionError
+^-->x(1, 2.0)-->AssertionError
+^-->x('x', 'y')-->AssertionError
